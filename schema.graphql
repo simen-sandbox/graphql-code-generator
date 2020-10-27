@@ -1,0 +1,61 @@
+directive @specifiedBy(url: String!) on SCALAR
+type Address {
+  addressLine1: String!
+  addressLine2: String
+  postalCode: String!
+  city: String!
+  country: String!
+}
+
+input AddressInput {
+  addressLine1: String!
+  addressLine2: String
+  postalCode: String!
+  city: String!
+  country: String!
+}
+
+type Customer {
+  id: ID!
+  name: String!
+  organizationNumber: Int!
+  customerNumber: Int!
+  externalId: String!
+  email: String!
+  invoiceEmail: String
+  overdueNoticeEmail: String
+  phoneNumber: String
+  phoneNumberMobile: String
+  invoiceSendMethod: String
+  postalAddress: Address!
+  physicalAddress: Address
+  invoicesDueIn: Int
+}
+
+input CustomerInput {
+  name: String!
+  organizationNumber: Int!
+  email: String!
+  invoiceEmail: String
+  overdueNoticeEmail: String
+  phoneNumber: String
+  phoneNumberMobile: String
+  invoiceSendMethod: String
+  postalAddress: AddressInput!
+  physicalAddress: AddressInput
+  invoicesDueIn: Int
+}
+
+type Mutation {
+  createCustomer(input: CustomerInput!): Customer!
+}
+
+type Query {
+  customer(id: String!): Customer
+  customers: [Customer!]!
+  me: User!
+}
+
+type User {
+  sub: ID!
+}
